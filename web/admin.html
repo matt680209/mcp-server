@@ -1,0 +1,102 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Admin Settings · Avatar MCP</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/admin.js" defer></script>
+</head>
+<body class="admin-body">
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Avatar MCP home">
+      <img class="brand-icon" src="/Avatar_MCP_icon.png" alt="">
+      <span class="brand-name">Avatar MCP</span>
+    </a>
+    <a class="quiet-link" href="/">Back to workspace <span aria-hidden="true">↗</span></a>
+  </header>
+
+  <main class="admin-shell">
+    <section id="login-view" class="login-view">
+      <div class="eyebrow"><span class="eyebrow-line"></span> Administrator access</div>
+      <h1>Service<br><span>settings.</span></h1>
+      <form id="login-form" class="login-form">
+        <label class="field-label" for="admin-password">Administrator password</label>
+        <input id="admin-password" name="password" type="password" autocomplete="current-password" required>
+        <p id="login-error" class="form-error" role="alert" hidden></p>
+        <button class="primary-button" type="submit"><span>Sign in</span><span class="button-arrow" aria-hidden="true">↗</span></button>
+      </form>
+      <p id="password-notice" class="muted-note" hidden>Administrator access is not configured. Set <code>MCP_ADMIN_PASSWORD</code> before starting the server.</p>
+    </section>
+
+    <section id="settings-view" hidden>
+      <div class="admin-title-row">
+        <div>
+          <div class="eyebrow"><span class="eyebrow-line"></span> Service console</div>
+          <h1>Admin settings</h1>
+        </div>
+        <button id="logout-button" class="secondary-button" type="button">Sign out</button>
+      </div>
+      <p id="settings-message" class="settings-message" role="status" hidden></p>
+      <form id="settings-form" class="settings-form">
+        <section class="settings-section">
+          <div class="section-heading"><span class="section-index">01</span><div><h2>Network</h2><p>DNS name, bind address, and port</p></div></div>
+          <div class="settings-grid three-columns">
+            <label><span class="field-label">DNS name</span><input id="dns-name" type="text" placeholder="mcp.example.com"></label>
+            <label><span class="field-label">Bind address</span><input id="network-host" type="text" required></label>
+            <label><span class="field-label">Port</span><input id="network-port" type="number" min="1" max="65535" required></label>
+          </div>
+          <p class="muted-note">Changes to the DNS name, bind address, or port require a restart. Configure HTTPS certificates with environment variables.</p>
+        </section>
+
+        <section class="settings-section">
+          <div class="section-heading"><span class="section-index">02</span><div><h2>Task limits</h2><p>Global concurrency, queue, and session limits</p></div></div>
+          <div class="settings-grid four-columns">
+            <label><span class="field-label">Active sessions</span><input id="max-users" type="number" min="1" max="100"></label>
+            <label><span class="field-label">Tasks per session</span><input id="per-session" type="number" min="1" max="20"></label>
+            <label><span class="field-label">Global concurrency</span><input id="max-concurrency" type="number" min="1" max="64"></label>
+            <label><span class="field-label">Queue capacity</span><input id="max-queue" type="number" min="1" max="10000"></label>
+          </div>
+        </section>
+
+        <section class="settings-section">
+          <div class="section-heading"><span class="section-index">03</span><div><h2>File sources</h2><p>Allowed URL hosts and Shared Folder roots</p></div></div>
+          <div class="settings-grid two-columns">
+            <label><span class="field-label">Allowed URL hosts (one per line)</span><textarea id="allowed-hosts" rows="4" placeholder="files.example.com"></textarea></label>
+            <label><span class="field-label">Allowed Shared Folder roots (one per line)</span><textarea id="shared-roots" rows="4" placeholder="\\\\fileserver\shared"></textarea></label>
+          </div>
+          <p class="muted-note">URL hosts must be listed and resolve to public addresses. Shared Folder requests read only the selected file and do not scan folders.</p>
+        </section>
+
+        <section class="settings-section">
+          <div class="section-heading"><span class="section-index">04</span><div><h2>Applications</h2><p>Routing terms, per-app concurrency, and timeout</p></div></div>
+          <div id="applications-list" class="editor-list"></div>
+          <button id="add-application" class="text-button" type="button">＋ Add application</button>
+          <p class="muted-note">Only the demo adapter is registered. Connect your desktop application in application/analyzer.py.</p>
+        </section>
+
+        <section class="settings-section">
+          <div class="section-heading"><span class="section-index">05</span><div><h2>Input fields</h2><p>Configure labels, validation, and character limits</p></div></div>
+          <div id="fields-list" class="editor-list"></div>
+          <button id="add-field" class="text-button" type="button">＋ Add field</button>
+        </section>
+
+        <div class="save-row"><span>Files are retained for 5 days; text records are kept indefinitely.</span><button class="primary-button" type="submit"><span>Save settings</span><span class="button-arrow" aria-hidden="true">↗</span></button></div>
+      </form>
+
+      <section class="settings-section test-section">
+        <div class="section-heading"><span class="section-index">06</span><div><h2>Administrator test</h2><p>Run the same workflow used by regular submissions</p></div></div>
+        <form id="test-form" class="test-form">
+          <label><span class="field-label">Application</span><select id="test-application"></select></label>
+          <label><span class="field-label">Test file</span><input id="test-file" type="file" required></label>
+          <div id="test-fields" class="test-fields"></div>
+          <button class="secondary-button" type="submit">Run test task</button>
+        </form>
+        <div id="test-result" class="test-result" aria-live="polite"></div>
+      </section>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>

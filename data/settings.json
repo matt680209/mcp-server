@@ -1,0 +1,64 @@
+{
+  "network": {
+    "dns_name": "www.avatarmcp.intel.com",
+    "host": "127.0.0.1",
+    "port": 80
+  },
+  "limits": {
+    "max_users": 1,
+    "per_session": 1,
+    "max_concurrency": 15,
+    "max_queue": 100
+  },
+  "applications": [
+    {
+      "id": "0001",
+      "name": "Avatar",
+      "adapter": "intelavatar",
+      "match_terms": [],
+      "enabled": true,
+      "max_concurrency": 15,
+      "timeout_seconds": 900
+    },
+    {
+      "id": "0002",
+      "name": "Sleep Study",
+      "adapter": "demo",
+      "match_terms": [],
+      "enabled": true,
+      "max_concurrency": 15,
+      "timeout_seconds": 900
+    },
+    {
+      "id": "0003",
+      "name": "BT",
+      "adapter": "demo",
+      "match_terms": [],
+      "enabled": true,
+      "max_concurrency": 15,
+      "timeout_seconds": 900
+    }
+  ],
+  "fields": [
+    {
+      "name": "time",
+      "label": "Date and time",
+      "type": "datetime",
+      "required": false,
+      "max_length": 40,
+      "placeholder": "2026/11/09 13:25:10"
+    },
+    {
+      "name": "question",
+      "label": "Your question",
+      "type": "textarea",
+      "required": true,
+      "max_length": 10000,
+      "placeholder": "Describe what you want analyzed"
+    }
+  ],
+  "source_access": {
+    "allowed_hosts": [],
+    "shared_roots": []
+  }
+}

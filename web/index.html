@@ -1,0 +1,83 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="color-scheme" content="light">
+  <title>Avatar MCP</title>
+  <link rel="stylesheet" href="/style.css">
+  <script src="/app.js" defer></script>
+</head>
+<body>
+  <header class="topbar">
+    <a class="brand" href="/" aria-label="Avatar MCP home">
+      <img class="brand-icon" src="/Avatar_MCP_icon.png" alt="">
+      <span class="brand-name">Avatar MCP</span>
+    </a>
+    <div class="topbar-tools">
+      <span class="service-state"><span class="state-dot"></span><span id="service-status">Connecting...</span></span>
+      <a class="quiet-link" href="/admin">Admin settings <span aria-hidden="true">↗</span></a>
+    </div>
+  </header>
+
+  <main class="workspace">
+    <section class="compose-panel" aria-labelledby="page-title">
+      <h1 id="page-title" class="page-title"><img class="page-wordmark" src="/Avatar_MCP_logo.png" alt="Avatar MCP"></h1>
+
+      <form id="task-form" class="task-form">
+        <div class="field-wrap application-field">
+          <label class="field-label" for="application-id">Application</label>
+          <select id="application-id" name="application_id" required disabled>
+            <option value="">Loading applications...</option>
+          </select>
+        </div>
+        <fieldset class="source-fieldset">
+          <legend>File source</legend>
+          <div class="source-tabs" role="group" aria-label="Choose a file source">
+            <label class="source-choice is-selected"><input type="radio" name="source-kind" value="upload" checked><span>Upload</span></label>
+            <label class="source-choice"><input type="radio" name="source-kind" value="url"><span>URL</span></label>
+            <label class="source-choice"><input type="radio" name="source-kind" value="shared"><span>Shared Folder</span></label>
+          </div>
+          <div id="upload-source" class="source-input">
+            <label class="file-drop" for="upload-file">
+              <span class="file-symbol" aria-hidden="true">＋</span>
+              <span class="file-copy"><strong id="file-label">Choose one file</strong><small id="file-hint">Any file type</small></span>
+              <span class="file-browse">Browse</span>
+            </label>
+            <input id="upload-file" class="visually-hidden" type="file" name="upload">
+          </div>
+          <div id="url-source" class="source-input" hidden>
+            <label class="field-label" for="source-url">File URL</label>
+            <input id="source-url" type="url" placeholder="https://example.com/report.log" autocomplete="url">
+          </div>
+          <div id="shared-source" class="source-input" hidden>
+            <label class="field-label" for="shared-path">Shared folder file path</label>
+            <input id="shared-path" type="text" placeholder="\\\\server\\share\\report.log" autocomplete="off">
+          </div>
+        </fieldset>
+
+        <div id="dynamic-fields" class="dynamic-fields" aria-live="polite"></div>
+        <p id="form-error" class="form-error" role="alert" hidden></p>
+        <button id="submit-task" class="primary-button" type="submit">
+          <span>Submit analysis</span><span class="button-arrow" aria-hidden="true">↗</span>
+        </button>
+      </form>
+    </section>
+
+    <section class="tasks-panel" aria-labelledby="tasks-title">
+      <div class="tasks-heading">
+        <div>
+          <h2 id="tasks-title">Task history</h2>
+        </div>
+        <button id="refresh-tasks" class="icon-button" type="button" title="Refresh task history" aria-label="Refresh task history">↻</button>
+      </div>
+      <div class="queue-summary"><span id="task-count">0 tasks</span><span id="queue-state">Ready</span></div>
+      <div id="task-list" class="task-list" aria-live="polite">
+        <div class="empty-state"><span class="empty-mark" aria-hidden="true">—</span><p>No tasks yet</p><small>Submitted tasks will appear here.</small></div>
+      </div>
+      <footer class="panel-footnote"><span class="footnote-mark">i</span><span>Files and results are removed according to the retention policy.</span></footer>
+    </section>
+  </main>
+  <div id="toast" class="toast" role="status" aria-live="polite"></div>
+</body>
+</html>
